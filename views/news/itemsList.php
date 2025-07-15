@@ -1,6 +1,4 @@
-<?php
-// $newsList is from action
-?>
+<?php echo $this->context->renderPartial('_copyright'); ?>
 <table>
   <tr>
     <th>Title</th>
