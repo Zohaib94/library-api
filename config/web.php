@@ -4,13 +4,18 @@ $params = require __DIR__ . '/params.php';
 $db = require __DIR__ . '/db.php';
 
 $config = [
+    // id of the app
     'id' => 'basic',
+    // root dir of application
     'basePath' => dirname(__DIR__),
+    // Array of components to be run during bootstrap process
     'bootstrap' => ['log'],
+    // Alias names for path definitions
     'aliases' => [
         '@bower' => '@vendor/bower-asset',
         '@npm'   => '@vendor/npm-asset',
     ],
+    // App components that can be used across app
     'components' => [
         'request' => [
             // !!! insert a secret key in the following (if it is empty) - this is required by cookie validation
@@ -44,6 +49,7 @@ $config = [
                 ],
             ],
         ],
+        // db config
         'db' => $db,
         'urlManager' => [
             'enablePrettyUrl' => true,
