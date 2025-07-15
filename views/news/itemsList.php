@@ -8,7 +8,7 @@
   </tr>
   <?php foreach ($newsList as $item) { ?>
     <tr>
-      <td><a href="<?php echo Yii::$app->urlManager->createUrl(['news/item-detail', 'title' => $item['title']]) ?>"><?php echo $item['title'] ?></a></td>
+      <td><a href="<?php echo Yii::$app->urlManager->createUrl(['news/item-detail', 'id' => $item['id']]) ?>"><?php echo $item['title'] ?></a></td>
       <td><?php echo $item['date'] ?></td>
     </tr>
   <?php } ?>
