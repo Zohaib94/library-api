@@ -1,5 +1,5 @@
 <?php
- // $newsList is from action
+// $newsList is from action
 ?>
 <table>
   <tr>
@@ -8,7 +8,7 @@
   </tr>
   <?php foreach ($newsList as $item) { ?>
     <tr>
-      <td><?php echo $item['title'] ?></td>
+      <td><a href="<?php echo Yii::$app->urlManager->createUrl(['news/item-detail', 'title' => $item['title']]) ?>"><?php echo $item['title'] ?></a></td>
       <td><?php echo $item['date'] ?></td>
     </tr>
   <?php } ?>

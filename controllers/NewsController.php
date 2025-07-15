@@ -18,6 +18,20 @@ class NewsController extends Controller
     return $this->render('itemsList', ['newsList' => $newsList]);
   }
 
+  public function actionItemDetail($title) {
+    $newsList = $this->dataItems();
+
+    $item = null;
+
+    foreach ($newsList as $newsListItem) {
+      if($title == $newsListItem['title']) {
+        $item = $newsListItem;
+      }
+    }
+
+    return $this->render('itemDetail', ['item' => $item]);
+  }
+
   public function dataItems()
   {
     $newsList = [
