@@ -23,10 +23,10 @@ class NewsController extends Controller
       $filteredData = $newsList;
     } else {
       foreach ($newsList as $news) {
-        $matchesYear = ($year == null) || (date('Y', strtotime($news['date'])) == $year);
-        $matchesCategory = ($category == null) || ($news['category'] == $category);
-        
-        if ($matchesYear && $matchesCategory) {
+        if ($year != null && date('Y', strtotime($news['date'])) == $year) {
+          $filteredData[] = $news;
+        } 
+        else if ($category != null && $news['category'] == $category) {
           $filteredData[] = $news;
         }
       }
