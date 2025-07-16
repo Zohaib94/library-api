@@ -25,8 +25,7 @@ class NewsController extends Controller
       foreach ($newsList as $news) {
         if ($year != null && date('Y', strtotime($news['date'])) == $year) {
           $filteredData[] = $news;
-        } 
-        else if ($category != null && $news['category'] == $category) {
+        } else if ($category != null && $news['category'] == $category) {
           $filteredData[] = $news;
         }
       }
@@ -48,6 +47,21 @@ class NewsController extends Controller
     }
 
     return $this->render('itemDetail', ['item' => $item]);
+  }
+
+  public function actionItemDetailNew($title)
+  {
+    $newsData = $this->data();
+
+    // Find the news item by title
+    foreach ($newsData as $item) {
+      if ($item['title'] === $title) {
+        return $this->render('itemDetailNew', ['item' => $item]);
+      }
+    }
+
+    // If not found, throw 404
+    throw new \yii\web\NotFoundHttpException('News item not found');
   }
 
   public function actionResponsiveContentTest()

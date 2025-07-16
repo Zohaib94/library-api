@@ -64,7 +64,8 @@ $config = [
                     'pattern' => 'news/<category:[a-zA-Z]+>/items-list',
                     'route' => 'news/items-list',
                     'defaults' => ['category' => 'shopping']
-                ]
+                ],
+                [ 'class' => 'app\components\NewsUrlRule' ]
             ],
         ],
     ],
