@@ -67,7 +67,7 @@ class RoomsController extends Controller
                     } elseif ($field == 'price_per_day') {
                         $fieldValue = (float)$fieldValue;
                     }
-                    
+
                     $query->andWhere([$fieldOperator, $field, $fieldValue]);
                 }
             }
@@ -76,5 +76,13 @@ class RoomsController extends Controller
         $rooms = $query->all();
 
         return $this->render('indexFiltered', ['rooms' => $rooms, 'searchFilter' => $searchFilter]);
+    }
+
+    public function actionLastReservationByRoomId($room_id)
+    {
+        $room = Room::findOne($room_id);
+        $lastReservation = $room->lastReservation;
+
+        return $this->render('lastReservationByRoomId', ['room' => $room, 'lastReservation' => $lastReservation]);
     }
 }
