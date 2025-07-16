@@ -3,45 +3,75 @@
 namespace app\models;
 
 use Yii;
-use yii\base\Model;
 
-class Room extends Model
+/**
+ * This is the model class for table "room".
+ *
+ * @property int $id
+ * @property int $floor
+ * @property int $room_number
+ * @property int $has_conditioner
+ * @property int $has_tv
+ * @property int $has_phone
+ * @property string $available_from
+ * @property float|null $price_per_day
+ * @property string|null $description
+ *
+ * @property Reservation[] $reservations
+ */
+class Room extends \yii\db\ActiveRecord
 {
-  public $floor;
-  public $room_number;
-  public $has_conditioner;
-  public $has_tv;
-  public $has_phone;
-  public $available_from;
-  public $price_per_day;
-  public $description;
 
-  public $fileImage;
 
-  public function attributeLabels()
-  {
-    return [
-      'floor' => 'Floor',
-      'room_number' => 'Room number',
-      'has_conditioner' => 'Condition available',
-      'has_tv' => 'TV available',
-      'has_phone' => 'Phone available',
-      'available_from' => 'Available from',
-      'price_per_day' => 'Price (EUR/day)',
-      'description' => 'Description',
-      'fileImage' => 'Image',
-    ];
-  }
+    /**
+     * {@inheritdoc}
+     */
+    public static function tableName()
+    {
+        return 'room';
+    }
 
-  public function rules()
-  {
-    return [
-      [['floor', 'room_number'], 'integer', 'min' => 0],
-      [['has_conditioner', 'has_tv', 'has_phone'], 'integer', 'min' => 0, 'max' => 1],
-      ['available_from', 'date', 'format' => 'php:Y-m-d'],
-      ['price_per_day', 'number', 'min' => 0],
-      ['description', 'string', 'max' => 500],
-      ['fileImage', 'file']
-    ];
-  }
+    /**
+     * {@inheritdoc}
+     */
+    public function rules()
+    {
+        return [
+            [['price_per_day', 'description'], 'default', 'value' => null],
+            [['floor', 'room_number', 'has_conditioner', 'has_tv', 'has_phone', 'available_from'], 'required'],
+            [['floor', 'room_number', 'has_conditioner', 'has_tv', 'has_phone'], 'integer'],
+            [['available_from'], 'safe'],
+            [['price_per_day'], 'number'],
+            [['description'], 'string'],
+        ];
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function attributeLabels()
+    {
+        return [
+            'id' => Yii::t('app', 'ID'),
+            'floor' => Yii::t('app', 'Floor'),
+            'room_number' => Yii::t('app', 'Room Number'),
+            'has_conditioner' => Yii::t('app', 'Has Conditioner'),
+            'has_tv' => Yii::t('app', 'Has Tv'),
+            'has_phone' => Yii::t('app', 'Has Phone'),
+            'available_from' => Yii::t('app', 'Available From'),
+            'price_per_day' => Yii::t('app', 'Price Per Day'),
+            'description' => Yii::t('app', 'Description'),
+        ];
+    }
+
+    /**
+     * Gets query for [[Reservations]].
+     *
+     * @return \yii\db\ActiveQuery
+     */
+    public function getReservations()
+    {
+        return $this->hasMany(Reservation::class, ['room_id' => 'id']);
+    }
+
 }
