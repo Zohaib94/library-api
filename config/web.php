@@ -14,6 +14,7 @@ $config = [
     'aliases' => [
         '@bower' => '@vendor/bower-asset',
         '@npm'   => '@vendor/npm-asset',
+        '@uploadedfilesdir' => '@app/web/uploadedfiles'
     ],
     // App components that can be used across app
     'components' => [

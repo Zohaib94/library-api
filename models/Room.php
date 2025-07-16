@@ -16,6 +16,8 @@ class Room extends Model
   public $price_per_day;
   public $description;
 
+  public $fileImage;
+
   public function attributeLabels()
   {
     return [
@@ -27,6 +29,7 @@ class Room extends Model
       'available_from' => 'Available from',
       'price_per_day' => 'Price (EUR/day)',
       'description' => 'Description',
+      'fileImage' => 'Image',
     ];
   }
 
@@ -37,7 +40,8 @@ class Room extends Model
       [['has_conditioner', 'has_tv', 'has_phone'], 'integer', 'min' => 0, 'max' => 1],
       ['available_from', 'date', 'format' => 'php:Y-m-d'],
       ['price_per_day', 'number', 'min' => 0],
-      ['description', 'string', 'max' => 500]
+      ['description', 'string', 'max' => 500],
+      ['fileImage', 'file']
     ];
   }
 }
