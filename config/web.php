@@ -58,7 +58,10 @@ $config = [
                 ['class' => 'yii\rest\UrlRule', 'controller' => 'member'],
                 ['class' => 'yii\rest\UrlRule', 'controller' => 'book'],
                 'GET loans' => 'loan/index',
-                'POST loans' => 'loan/borrow'
+                'POST loans' => 'loan/borrow',
+                'news/<year:\d{4}/items-list' => 'news/items-list',
+                'news/<category:\w+>/items-list' => 'test-rules/items-list
+                '
             ],
         ],
     ],
