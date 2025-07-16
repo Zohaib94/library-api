@@ -21,8 +21,7 @@ use Yii;
  */
 class Room extends \yii\db\ActiveRecord
 {
-
-
+    public $fileImage;
     /**
      * {@inheritdoc}
      */
@@ -43,6 +42,7 @@ class Room extends \yii\db\ActiveRecord
             [['available_from'], 'safe'],
             [['price_per_day'], 'number'],
             [['description'], 'string'],
+            ['fileImage', 'file']
         ];
     }
 
