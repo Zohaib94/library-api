@@ -9,7 +9,7 @@ class NewsController extends Controller
 {
   public function actionIndex()
   {
-    echo "this is my first controller";
+    return $this->render('index');
   }
 
   public function actionItemsList()
