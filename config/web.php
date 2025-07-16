@@ -60,7 +60,11 @@ $config = [
                 'GET loans' => 'loan/index',
                 'POST loans' => 'loan/borrow',
                 'news/<year:\d{4}>/items-list' => 'news/items-list',
-                'news/<category:[a-zA-Z]+>/items-list' => 'news/items-list'
+                [
+                    'pattern' => 'news/<category:[a-zA-Z]+>/items-list',
+                    'route' => 'news/items-list',
+                    'defaults' => ['category' => 'shopping']
+                ]
             ],
         ],
     ],
