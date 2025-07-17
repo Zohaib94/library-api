@@ -13,23 +13,34 @@ class RoomsController extends Controller
 {
     public function actionCreate()
     {
+        // 1. Create a new Room instance;
         $model = new Room();
-        $modelCanSave = false;
 
-        if ($model->load(Yii::$app->request->post()) && $model->validate()) {
-            $model->fileImage = UploadedFile::getInstance($model, 'fileImage');
-
-            if ($model->fileImage) {
-                $model->fileImage->saveAs(Yii::getAlias(('@app/web/uploadedfiles/' . $model->fileImage->baseName . '.' . $model->fileImage->extension)));
-            }
-
-            $modelCanSave = true;
+        // 2. Check if $_POST['Room'] contains data and save
+        if ($model->load(Yii::$app->request->post()) && ($model->save())) {
+            return $this->redirect(['detail', 'id' => $model->id]);
         }
 
-        return $this->render('create', [
-            'model' => $model,
-            'modelCanSave' => $modelCanSave
-        ]);
+        return $this->render('create', ['model' => $model]);
+    }
+
+    public function actionUpdate($id)
+    {
+        $model = Room::findOne($id);
+
+        if (($model != null) && $model->load(Yii::$app->request->post()) && ($model->save())) {
+            return $this->redirect(['detail', 'id' => $model->id]);
+        }
+
+        return $this->render('update', ['model' => $model]);
+    }
+
+    public function actionDetail($id)
+    {
+        // 1. Create a new Room instance;
+        $model = Room::findOne($id);
+
+        return $this->render('detail', ['model' => $model]);
     }
 
     public function actionIndex()
@@ -96,7 +107,8 @@ class RoomsController extends Controller
         return $this->render('lastReservationForEveryRoom', ['rooms' => $rooms]);
     }
 
-    public function actionIndexWithRelationships() {
+    public function actionIndexWithRelationships()
+    {
         $room_id = Yii::$app->request->get('room_id', null);
         $reservation_id = Yii::$app->request->get('reservation_id', null);
         $customer_id = Yii::$app->request->get('customer_id', null);
