@@ -8,6 +8,8 @@ $config = [
     'id' => 'basic',
     // root dir of application
     'basePath' => dirname(__DIR__),
+    // timezone
+    'timeZone' => 'GMT',
     // Array of components to be run during bootstrap process
     'bootstrap' => ['log'],
     // Alias names for path definitions
