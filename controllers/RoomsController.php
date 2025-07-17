@@ -85,4 +85,12 @@ class RoomsController extends Controller
 
         return $this->render('lastReservationByRoomId', ['room' => $room, 'lastReservation' => $lastReservation]);
     }
+
+    public function actionLastReservationForEveryRoom()
+    {
+        // Eager load last reservation from 'getLastReservation'
+        $rooms = Room::find()->with('lastReservation')->all();
+
+        return $this->render('lastReservationForEveryRoom', ['rooms' => $rooms]);
+    }
 }
