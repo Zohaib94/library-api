@@ -14,6 +14,7 @@ use Yii;
  *
  * @property Reservation[] $reservations
  * @property Room[] $rooms
+ * @property int $reservationsCount
  */
 class Customer extends \yii\db\ActiveRecord
 {
@@ -66,5 +67,10 @@ class Customer extends \yii\db\ActiveRecord
     {
         return $this->hasMany(Room::class, ['id' =>
         'room_id'])->via('reservations');
+    }
+
+    public function getReservationsCount()
+    {
+        return $this->hasMany(Reservation::class, ['customer_id' => 'id'])->count();
     }
 }
