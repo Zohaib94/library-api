@@ -18,6 +18,7 @@ use Yii;
  * @property string|null $description
  *
  * @property Reservation[] $reservations
+ * @property Customer[] $customers
  */
 class Room extends \yii\db\ActiveRecord
 {
@@ -77,5 +78,11 @@ class Room extends \yii\db\ActiveRecord
   public function getLastReservation()
   {
     return $this->hasOne(Reservation::class, ['room_id' => 'id'])->orderBy('id');
+  }
+
+  public function getCustomers()
+  {
+    return $this->hasMany(Customer::class, ['id' =>
+    'customer_id'])->via('reservations');
   }
 }

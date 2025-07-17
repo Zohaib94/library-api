@@ -13,6 +13,7 @@ use Yii;
  * @property string|null $phone_number
  *
  * @property Reservation[] $reservations
+ * @property Room[] $rooms
  */
 class Customer extends \yii\db\ActiveRecord
 {
@@ -61,4 +62,9 @@ class Customer extends \yii\db\ActiveRecord
         return $this->hasMany(Reservation::class, ['customer_id' => 'id']);
     }
 
+    public function getRooms()
+    {
+        return $this->hasMany(Room::class, ['id' =>
+        'room_id'])->via('reservations');
+    }
 }
