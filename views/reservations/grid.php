@@ -27,6 +27,10 @@ $roomsFilterData = yii\helpers\ArrayHelper::map(app\models\Room::find()->all(), 
     ],
     'price_per_day',
     [
+      'header' => 'Customer',
+      'attribute' => 'customer.surname',
+    ],
+    [
       'class' => 'yii\grid\ActionColumn',
       'template' => '{delete}',
       'header' => 'Actions',

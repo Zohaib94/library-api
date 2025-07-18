@@ -5,6 +5,7 @@ namespace app\controllers;
 use Yii;
 use yii\web\Controller;
 use app\models\Reservation;
+use app\models\ReservationSearch;
 use yii\data\ActiveDataProvider;
 
 class ReservationsController extends Controller
@@ -12,10 +13,15 @@ class ReservationsController extends Controller
   public function actionGrid()
   {
     $query = Reservation::find();
-    $searchModel = new Reservation();
+    $searchModel = new ReservationSearch();
 
-    if (isset($_GET['Reservation'])) {
+    if (isset($_GET['ReservationSearch'])) {
       $searchModel->load(Yii::$app->request->get());
+
+      $query->joinWith(['customer']);
+      $query->andFilterWhere([
+        'LIKE', 'customer.surname', $searchModel->getAttribute('customer.surname')
+      ]);
   
       $query->andFilterWhere([
         'id' => $searchModel->id,
