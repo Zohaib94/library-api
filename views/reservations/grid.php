@@ -2,15 +2,18 @@
 
 use \yii\helpers\Html;
 use \yii\grid\GridView;
+?>
 
+<?php
 $roomsFilterData = yii\helpers\ArrayHelper::map(app\models\Room::find()->all(), 'id', function ($model, $defaultValue) {
   return sprintf('Floor: %d - Number: %d', $model->floor, $model->room_number);
 });
-
 ?>
+
 <?= GridView::widget([
   'dataProvider' => $dataProvider,
   'filterModel' => $searchModel,
+  'showFooter' => true,
   'columns' => [
     'id',
     [
@@ -25,11 +28,16 @@ $roomsFilterData = yii\helpers\ArrayHelper::map(app\models\Room::find()->all(), 
         return $model->room->floor;
       }
     ],
-    'price_per_day',
+    [
+      'attribute' => 'price_per_day',
+      'footer' => Yii::$app->formatter->asCurrency($resultQueryAveragePricePerDay, 'EUR')
+    ],
     [
       'header' => 'Customer',
       'attribute' => 'customer.surname',
     ],
+    'date_from',
+    'date_to',
     [
       'class' => 'yii\grid\ActionColumn',
       'template' => '{delete}',

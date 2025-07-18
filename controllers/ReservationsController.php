@@ -31,6 +31,8 @@ class ReservationsController extends Controller
       ]);
     }
 
+    $resultQueryAveragePricePerDay = $query->average('price_per_day');
+
     $dataProvider = new ActiveDataProvider([
       'query' => $query,
       'pagination' => [
@@ -38,6 +40,10 @@ class ReservationsController extends Controller
       ]
     ]);
 
-    return $this->render('grid', ['dataProvider' => $dataProvider, 'searchModel' => $searchModel]);
+    return $this->render('grid', [
+      'dataProvider' => $dataProvider,
+      'searchModel' => $searchModel,
+      'resultQueryAveragePricePerDay' => $resultQueryAveragePricePerDay
+    ]);
   }
 }
