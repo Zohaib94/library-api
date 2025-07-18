@@ -1,7 +1,7 @@
 <?php
 
 use \yii\helpers\Html;
-use \yii\grid\GridView;
+use app\components\GridViewReservation;
 ?>
 
 <?php
@@ -10,7 +10,7 @@ $roomsFilterData = yii\helpers\ArrayHelper::map(app\models\Room::find()->all(), 
 });
 ?>
 
-<?= GridView::widget([
+<?= GridViewReservation::widget([
   'dataProvider' => $dataProvider,
   'filterModel' => $searchModel,
   'showFooter' => true,
