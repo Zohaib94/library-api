@@ -73,4 +73,9 @@ class Customer extends \yii\db\ActiveRecord
     {
         return $this->hasMany(Reservation::class, ['customer_id' => 'id'])->count();
     }
+
+    public function getNameAndSurname()
+    {
+        return $this->name . ' ' . $this->surname;
+    }
 }
