@@ -6,9 +6,36 @@ use app\models\LoginForm;
 use Yii;
 use yii\web\Controller;
 use app\models\User;
+use yii\filters\AccessControl;
 
 class MyAuthenticationController extends Controller
 {
+
+  public function behaviors()
+  {
+    return [
+      'access' => [
+        'class' => AccessControl::class,
+        'only' => ['login', 'logout'],
+        'denyCallback' => function ($rule, $action) {
+          return Yii::$app->response->redirect(['rooms']);
+        },
+        'rules' => [
+          [
+            'allow' => true,
+            'actions' => ['login'],
+            'roles' => ['?'], // guest
+          ],
+          [
+            'allow' => true,
+            'actions' => ['logout'],
+            'roles' => ['@'], // authenticated
+          ],
+        ],
+      ],
+    ];
+  }
+
   public function actionLogin()
   {
     $error = null;
@@ -32,7 +59,8 @@ class MyAuthenticationController extends Controller
     return $this->render('login', ['error' => $error]);
   }
 
-  public function actionLoginWithModel() {
+  public function actionLoginWithModel()
+  {
     $error = null;
     $model = new LoginForm();
 
