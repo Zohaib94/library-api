@@ -2,6 +2,7 @@
 
 namespace app\controllers;
 
+use app\models\Customer;
 use app\models\Reservation;
 use app\models\ReservationSearch;
 use yii\web\Controller;
@@ -116,6 +117,35 @@ class ReservationsWithGiiController extends Controller
         $this->findModel($id)->delete();
 
         return $this->redirect(['index']);
+    }
+
+    public function actionCreateCustomerAndReservation()
+    {
+        $customer = new Customer();
+        $reservation = new Reservation();
+
+        if ($customer->load(Yii::$app->request->post()) && $customer->validate()) {
+            $dbTransaction = Yii::$app->db->beginTransaction();
+            
+            if ($customer->save()) {
+                $reservation->load(Yii::$app->request->post());
+                $reservation->customer_id = $customer->id;
+                
+                if ($reservation->validate() && $reservation->save()) {
+                    $dbTransaction->commit();
+                    return $this->redirect(['view', 'id' => $reservation->id]);
+                } else {
+                    $dbTransaction->rollBack();
+                }
+            } else {
+                $dbTransaction->rollBack();
+            }
+        }
+
+        return $this->render('createCustomerAndReservation', [
+            'customer' => $customer,
+            'reservation' => $reservation
+        ]);
     }
 
     /**
