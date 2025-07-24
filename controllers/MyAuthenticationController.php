@@ -2,6 +2,7 @@
 
 namespace app\controllers;
 
+use app\models\LoginForm;
 use Yii;
 use yii\web\Controller;
 use app\models\User;
@@ -29,6 +30,21 @@ class MyAuthenticationController extends Controller
     }
 
     return $this->render('login', ['error' => $error]);
+  }
+
+  public function actionLoginWithModel() {
+    $error = null;
+    $model = new LoginForm();
+
+    if ($model->load(Yii::$app->request->post())) {
+      if ($model->validate() && $model->user != null) {
+        Yii::$app->user->login($model->user);
+      } else {
+        $error = 'Username/Password error';
+      }
+    }
+
+    return $this->render('login-with-model', ['model' => $model, 'error' => $error]);
   }
 
   public function actionLogout()
