@@ -68,8 +68,11 @@ $config = [
                     'route' => 'news/items-list',
                     'defaults' => ['category' => 'shopping']
                 ],
-                [ 'class' => 'app\components\NewsUrlRule' ]
+                ['class' => 'app\components\NewsUrlRule']
             ],
+        ],
+        'authManager' => [
+            'class' => 'yii\rbac\DbManager',
         ],
     ],
     'params' => $params,
