@@ -7,10 +7,30 @@ use app\models\Reservation;
 use Yii;
 use yii\web\Controller;
 use app\models\Room;
+use yii\filters\AccessControl;
 use yii\web\UploadedFile;
 
 class RoomsController extends Controller
 {
+    public function behaviors()
+    {
+        return [
+            'access' => [
+                'class' => AccessControl::class,
+                'rules' => [
+                    [
+                        'allow' => true,
+                        'actions' => ['create'],
+                        'roles' => ['operator']
+                    ],
+                    [
+                        'allow' => true,
+                        'actions' => ['index'],
+                    ]
+                ]
+            ]
+        ];
+    }
     public function actionCreate()
     {
         // 1. Create a new Room instance;
